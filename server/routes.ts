@@ -36,33 +36,67 @@ export async function registerRoutes(
         messages: [
           {
             role: "system",
-            content: `You are an expert sentiment analysis AI. Analyze the given customer feedback and provide a comprehensive analysis.
+            content: `You are an expert sentiment analysis AI specializing in customer feedback analysis. Analyze the given customer feedback and provide a comprehensive, detailed analysis.
 
-Your analysis should include:
-1. Overall sentiment (positive, negative, or neutral)
-2. A sentiment score from 0-100 (0 being most negative, 100 being most positive)
-3. Confidence level of your analysis (0-100)
-4. Detected emotions with their intensity (0-100). Common emotions include: joy, satisfaction, gratitude, trust, anticipation, frustration, anger, disappointment, confusion, sadness
-5. Key actionable insights based on the feedback with priority levels (high, medium, low)
-6. A brief summary of the feedback
+Your analysis must include:
 
-You must respond with valid JSON only in this exact format:
+1. **Overall Sentiment**: positive, negative, or neutral
+2. **Sentiment Score**: 0-100 (0 = most negative, 100 = most positive)
+3. **Confidence Level**: 0-100 (how confident you are in your analysis)
+4. **Urgency Level**: critical, high, medium, or low (based on customer need)
+5. **Customer Intent**: What the customer is trying to achieve or communicate
+
+6. **Detected Emotions** (array with name and intensity 0-100):
+   - Common emotions: joy, satisfaction, gratitude, trust, anticipation, frustration, anger, disappointment, confusion, sadness, anxiety, relief, surprise
+
+7. **Key Phrases** (array with phrase and sentiment):
+   - Extract 3-5 key phrases that capture the essence of the feedback
+
+8. **Key Insights** (array with text and priority high/medium/low):
+   - Identify 3-5 actionable insights from the feedback
+
+9. **Recommendations** (array of detailed action items):
+   Each recommendation must have:
+   - title: Short action title
+   - description: Detailed explanation of what to do
+   - category: customer_service, product, process, communication, or technical
+   - impact: high, medium, or low
+   - timeframe: immediate (within 24h), short_term (1-2 weeks), long_term (1+ months)
+   
+   Provide 3-5 specific, actionable recommendations based on the feedback.
+
+10. **Summary**: Brief 1-2 sentence summary of the feedback
+
+11. **Detailed Analysis**: 2-3 paragraph thorough analysis of the customer's sentiment, underlying concerns, and the business implications of this feedback.
+
+Respond with valid JSON only in this exact format:
 {
   "sentiment": "positive",
   "sentimentScore": 85,
-  "confidence": 90,
-  "emotions": [{"name": "joy", "intensity": 80}],
-  "insights": [{"text": "Customer is satisfied with delivery speed", "priority": "medium"}],
-  "summary": "Brief summary here"
+  "confidence": 92,
+  "urgencyLevel": "medium",
+  "customerIntent": "Customer is seeking acknowledgment of their positive experience",
+  "emotions": [{"name": "satisfaction", "intensity": 85}],
+  "keyPhrases": [{"phrase": "great service", "sentiment": "positive"}],
+  "insights": [{"text": "Customer values quick response times", "priority": "high"}],
+  "recommendations": [{
+    "title": "Send Thank You Follow-up",
+    "description": "Send a personalized thank you email acknowledging the positive feedback and offering a loyalty discount",
+    "category": "customer_service",
+    "impact": "medium",
+    "timeframe": "immediate"
+  }],
+  "summary": "Customer expresses satisfaction with service quality",
+  "detailedAnalysis": "The customer's feedback reveals a positive experience..."
 }`
           },
           {
             role: "user",
-            content: `Analyze this customer feedback:\n\n${feedback}`
+            content: `Analyze this customer feedback in detail:\n\n${feedback}`
           }
         ],
         response_format: { type: "json_object" },
-        max_tokens: 1024,
+        max_tokens: 2048,
       });
 
       console.log("OpenAI response received, choices:", response.choices?.length);
@@ -86,9 +120,14 @@ You must respond with valid JSON only in this exact format:
           sentiment: analysisResult.sentiment || "neutral",
           sentimentScore: typeof analysisResult.sentimentScore === 'number' ? analysisResult.sentimentScore : 50,
           confidence: typeof analysisResult.confidence === 'number' ? analysisResult.confidence : 0,
+          urgencyLevel: analysisResult.urgencyLevel || "medium",
+          customerIntent: analysisResult.customerIntent || "",
           emotions: Array.isArray(analysisResult.emotions) ? analysisResult.emotions : [],
+          keyPhrases: Array.isArray(analysisResult.keyPhrases) ? analysisResult.keyPhrases : [],
           insights: Array.isArray(analysisResult.insights) ? analysisResult.insights : [],
+          recommendations: Array.isArray(analysisResult.recommendations) ? analysisResult.recommendations : [],
           summary: analysisResult.summary || "",
+          detailedAnalysis: analysisResult.detailedAnalysis || "",
         };
         
         console.log("Analysis complete. Sentiment:", result.sentiment, "Score:", result.sentimentScore);

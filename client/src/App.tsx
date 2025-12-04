@@ -5,14 +5,14 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "@/pages/not-found";
 import Home from "@/pages/home";
-import { InterswitchLogo } from "@/components/interswitch-logo";
+import interswitchLogo from "@assets/interswitch_logo_(2)_1764834997796.png";
 
 function Header() {
   return (
     <header className="sticky top-0 z-50 w-full h-16 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="max-w-7xl mx-auto px-6 h-full flex items-center justify-between gap-4">
         <div className="flex items-center gap-2" data-testid="container-logo">
-          <InterswitchLogo className="h-8" />
+          <img src={interswitchLogo} alt="Interswitch" className="h-6" />
         </div>
         <nav className="flex items-center gap-4">
           <span className="text-sm font-medium uppercase tracking-wide text-primary" data-testid="text-nav-title">

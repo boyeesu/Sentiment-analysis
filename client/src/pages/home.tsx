@@ -195,7 +195,7 @@ export default function Home() {
           <h1 className="md:text-5xl font-bold tracking-tight text-foreground mb-4 text-[40px]">
             Understand Your Customer Feedback
           </h1>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-muted-foreground max-w-2xl mx-auto text-[16px]">
             Paste customer feedback below and get instant AI analysis of sentiment, emotions, and actionable recommendations.
           </p>
         </div>

@@ -4,6 +4,17 @@
 
 This is an AI-powered sentiment analysis web application built for Interswitch that analyzes customer feedback to extract emotional insights, sentiment scores, and actionable recommendations. The application uses OpenAI's GPT-5 model to perform natural language processing on customer feedback, providing comprehensive sentiment analysis including emotion detection, confidence scoring, and priority-based insights.
 
+## Recent Changes
+
+**December 4, 2025 - Replit Environment Setup**
+- Imported from GitHub and configured for Replit environment
+- Installed all npm dependencies
+- Configured OpenAI integration with GPT-5 model (updated from GPT-4o)
+- Set up workflow for development server on port 5000
+- Configured deployment for autoscale production hosting
+- Verified frontend and backend are running correctly
+- Made drizzle.config.ts optional (app is stateless, no database needed)
+
 ## User Preferences
 
 Preferred communication style: Simple, everyday language.

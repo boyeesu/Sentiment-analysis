@@ -3,11 +3,10 @@ import { createServer, type Server } from "http";
 import OpenAI from "openai";
 import { sentimentAnalysisRequestSchema } from "@shared/schema";
 
-// the newest OpenAI model is "gpt-5" which was released August 7, 2025. do not change this unless explicitly requested by the user
 const openai = new OpenAI({ 
   apiKey: process.env.OPENAI_API_KEY,
-  timeout: 30000,
-  maxRetries: 2,
+  timeout: 60000,
+  maxRetries: 3,
 });
 
 export async function registerRoutes(
@@ -29,13 +28,15 @@ export async function registerRoutes(
 
       const { feedback } = parseResult.data;
 
-      // Call OpenAI for sentiment analysis
+      console.log("Starting sentiment analysis for feedback of length:", feedback.length);
+
+      // Call OpenAI for sentiment analysis using gpt-4o for reliability
       const response = await openai.chat.completions.create({
-        model: "gpt-5",
+        model: "gpt-4o",
         messages: [
           {
             role: "system",
-            content: `You are an expert sentiment analysis AI. Analyze the given customer feedback and provide a comprehensive analysis. You must respond with valid JSON only.
+            content: `You are an expert sentiment analysis AI. Analyze the given customer feedback and provide a comprehensive analysis.
 
 Your analysis should include:
 1. Overall sentiment (positive, negative, or neutral)
@@ -45,14 +46,14 @@ Your analysis should include:
 5. Key actionable insights based on the feedback with priority levels (high, medium, low)
 6. A brief summary of the feedback
 
-Respond with JSON in this exact format:
+You must respond with valid JSON only in this exact format:
 {
-  "sentiment": "positive" | "negative" | "neutral",
-  "sentimentScore": number,
-  "confidence": number,
-  "emotions": [{"name": string, "intensity": number}],
-  "insights": [{"text": string, "priority": "high" | "medium" | "low"}],
-  "summary": string
+  "sentiment": "positive",
+  "sentimentScore": 85,
+  "confidence": 90,
+  "emotions": [{"name": "joy", "intensity": 80}],
+  "insights": [{"text": "Customer is satisfied with delivery speed", "priority": "medium"}],
+  "summary": "Brief summary here"
 }`
           },
           {
@@ -61,17 +62,21 @@ Respond with JSON in this exact format:
           }
         ],
         response_format: { type: "json_object" },
-        max_completion_tokens: 1024,
+        max_tokens: 1024,
       });
+
+      console.log("OpenAI response received, choices:", response.choices?.length);
 
       const content = response.choices[0]?.message?.content;
       if (!content) {
-        console.error("Empty response from OpenAI");
+        console.error("Empty response from OpenAI. Full response:", JSON.stringify(response, null, 2));
         return res.status(500).json({ 
           error: "Failed to analyze sentiment",
           message: "AI returned an empty response. Please try again."
         });
       }
+
+      console.log("Parsing response content...");
 
       try {
         const analysisResult = JSON.parse(content);
@@ -86,6 +91,7 @@ Respond with JSON in this exact format:
           summary: analysisResult.summary || "",
         };
         
+        console.log("Analysis complete. Sentiment:", result.sentiment, "Score:", result.sentimentScore);
         return res.json(result);
       } catch (parseError) {
         console.error("Failed to parse OpenAI response:", content);
@@ -95,10 +101,21 @@ Respond with JSON in this exact format:
         });
       }
     } catch (error: any) {
-      console.error("Sentiment analysis error:", error);
+      console.error("Sentiment analysis error:", error.message);
+      console.error("Error details:", error);
       
-      if (error.code === "invalid_api_key") {
-        return res.status(401).json({ error: "Invalid OpenAI API key" });
+      if (error.code === "invalid_api_key" || error.status === 401) {
+        return res.status(401).json({ 
+          error: "Invalid API key",
+          message: "The OpenAI API key is invalid. Please check your configuration."
+        });
+      }
+      
+      if (error.status === 429) {
+        return res.status(429).json({ 
+          error: "Rate limit exceeded",
+          message: "Too many requests. Please wait a moment and try again."
+        });
       }
       
       if (error.code === "ECONNRESET" || error.code === "ETIMEDOUT" || error.message?.includes("timeout")) {

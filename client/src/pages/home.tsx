@@ -215,7 +215,7 @@ export default function Home() {
                 id="feedback-input"
                 data-testid="input-feedback"
                 placeholder="Paste your customer feedback here to analyze sentiment, emotions, and get actionable recommendations..."
-                className="min-h-48 resize-none text-base focus:border-primary focus:ring-primary"
+                className="min-h-32 resize-none text-base focus:border-primary focus:ring-primary"
                 value={feedback}
                 onChange={(e) => {
                   setFeedback(e.target.value);

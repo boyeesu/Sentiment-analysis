@@ -97,7 +97,7 @@ Respond with valid JSON only in this exact format:
           }
         ],
         response_format: { type: "json_object" },
-        max_tokens: 2048,
+        max_completion_tokens: 2048,
       });
 
       console.log("OpenAI response received, choices:", response.choices?.length);

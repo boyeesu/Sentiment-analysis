@@ -192,7 +192,7 @@ export default function Home() {
               AI-Powered Analysis
             </span>
           </div>
-          <h1 className="md:text-5xl font-bold tracking-tight text-foreground mb-4 text-[40px]">
+          <h1 className="md:text-5xl font-bold tracking-tight text-foreground mb-4 text-[41px]">
             Understand Your Customer Feedback
           </h1>
           <p className="text-muted-foreground max-w-2xl mx-auto text-[16px]">

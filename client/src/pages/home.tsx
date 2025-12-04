@@ -118,7 +118,7 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-teal-50/50 to-background dark:from-teal-950/20 dark:to-background">
+    <div className="min-h-screen bg-gradient-to-b from-sky-50/50 to-background dark:from-sky-950/20 dark:to-background">
       {/* Hero Section */}
       <section className="py-12 md:py-20 px-6">
         <div className="max-w-4xl mx-auto text-center">

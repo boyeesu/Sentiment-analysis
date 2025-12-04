@@ -69,9 +69,10 @@ Three-column grid on desktop (grid-cols-1 md:grid-cols-3 gap-6):
 - Soft gray background treatment
 
 ### Visual Hierarchy
-- Teal accent color (#0D9488 or similar) for primary actions, links, and emphasis
+- Interswitch dark blue (#1A5276 or similar) for primary actions, links, and emphasis
+- Interswitch red (#C0392B) for accents and highlights
 - Gray scale for backgrounds: bg-gray-50 (page), bg-white (cards), bg-gray-100 (inputs)
-- Border treatment: border border-gray-200 for cards, focus:border-teal-500 for inputs
+- Border treatment: border border-gray-200 for cards, focus:border-primary for inputs
 - Shadow levels: shadow-sm for cards, shadow-md for elevated states
 
 ### Responsive Behavior
@@ -93,7 +94,8 @@ Three-column grid on desktop (grid-cols-1 md:grid-cols-3 gap-6):
 - Success checkmark animation on completion
 
 ## Brand Consistency
-- Maintain Interswitch teal accent throughout
+- Maintain Interswitch dark blue (#1A5276) as primary color
+- Use Interswitch red (#C0392B) for accent highlights
 - Professional, trustworthy aesthetic appropriate for B2B SaaS
 - Clean, uncluttered interface prioritizing readability
 - Consistent spacing rhythm creates visual calm

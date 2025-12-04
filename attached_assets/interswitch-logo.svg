@@ -1,0 +1,5 @@
+<svg width="140" height="32" viewBox="0 0 140 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M8 6L16 16L8 26" stroke="#0D9488" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M16 6L24 16L16 26" stroke="#EF4444" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="32" y="21" font-family="Inter, sans-serif" font-size="16" font-weight="600" fill="currentColor">Interswitch</text>
+</svg>

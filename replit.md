@@ -29,7 +29,7 @@ Preferred communication style: Simple, everyday language.
 - Consistent spacing units (4, 6, 8, 12, 16, 20, 24)
 - Typography hierarchy using Inter font family
 - Modern data analysis tool aesthetic inspired by Linear and Notion
-- Color system based on HSL values with alpha channel support
+- Color system based on HSL values with teal accent (#0D9488)
 
 **State Management**
 - TanStack Query (React Query) for server state management and API caching
@@ -68,16 +68,8 @@ Preferred communication style: Simple, everyday language.
 
 **Current Implementation**
 - In-memory storage implementation (`MemStorage` class)
-- Simple Map-based user storage for potential future authentication
-- No persistent database currently in use for sentiment analysis results
 - Stateless API design - each analysis request is independent
-
-**Database Configuration (Prepared but Unused)**
-- Drizzle ORM configured for PostgreSQL dialect
-- Database schema defined in `shared/schema.ts`
-- Migration configuration in `drizzle.config.ts`
-- Connection expects `DATABASE_URL` environment variable
-- Ready for future persistent storage needs (e.g., saving analysis history)
+- No persistent database currently in use for sentiment analysis results
 
 ### External Dependencies
 
@@ -89,8 +81,6 @@ Preferred communication style: Simple, everyday language.
 
 **UI Component Libraries**
 - Radix UI: Comprehensive collection of unstyled, accessible components
-  - Dialog, Dropdown, Popover, Toast, Tabs, and 20+ other primitives
-  - Handles accessibility (ARIA), keyboard navigation, and focus management
 - Embla Carousel: Touch-friendly carousel component
 - CMDK: Command palette component for future features
 - Lucide React: Icon library for consistent iconography
@@ -109,11 +99,39 @@ Preferred communication style: Simple, everyday language.
 
 **Type Safety & Validation**
 - Zod for runtime schema validation
-- drizzle-zod for database schema validation
 - TypeScript for compile-time type checking
 - Shared type definitions between frontend and backend
 
-**Session & Authentication (Configured but Not Active)**
-- express-session for session management
-- connect-pg-simple for PostgreSQL session store
-- Passport.js infrastructure present for future authentication needs
+## Key Features
+
+1. **AI-Powered Sentiment Analysis**: Uses OpenAI GPT-5 to analyze customer feedback
+2. **Emotion Detection**: Extracts specific emotions (joy, frustration, satisfaction, etc.) with intensity scores
+3. **Actionable Insights**: Generates priority-based recommendations based on feedback
+4. **Clean Professional Interface**: Teal-accented design matching Interswitch branding
+5. **Quick Sample Buttons**: Pre-loaded sample feedback for testing
+6. **Character Counter**: Real-time feedback length tracking
+7. **Loading States**: Smooth animations during analysis
+8. **Error Handling**: Robust error messages with retry support
+
+## API Endpoint
+
+### POST /api/analyze
+
+**Request:**
+```json
+{
+  "feedback": "Customer feedback text here"
+}
+```
+
+**Response:**
+```json
+{
+  "sentiment": "positive" | "negative" | "neutral",
+  "sentimentScore": 0-100,
+  "confidence": 0-100,
+  "emotions": [{"name": "joy", "intensity": 85}],
+  "insights": [{"text": "Action item", "priority": "high"}],
+  "summary": "Brief summary"
+}
+```

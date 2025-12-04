@@ -269,7 +269,7 @@ export default function Home() {
                 </CardHeader>
                 <CardContent className="pt-4">
                   <div className="flex flex-wrap gap-2" data-testid="container-emotions">
-                    {result.emotions.map((emotion, index) => (
+                    {(result.emotions ?? []).map((emotion, index) => (
                       <Badge
                         key={index}
                         variant="secondary"
@@ -280,7 +280,7 @@ export default function Home() {
                       </Badge>
                     ))}
                   </div>
-                  {result.emotions.length === 0 && (
+                  {(!result.emotions || result.emotions.length === 0) && (
                     <p className="text-sm text-muted-foreground">No specific emotions detected.</p>
                   )}
                 </CardContent>
@@ -296,7 +296,7 @@ export default function Home() {
                 </CardHeader>
                 <CardContent className="pt-4">
                   <div className="space-y-3" data-testid="container-insights">
-                    {result.insights.map((insight, index) => (
+                    {(result.insights ?? []).map((insight, index) => (
                       <div
                         key={index}
                         className={`pl-3 border-l-2 ${getPriorityColor(insight.priority)}`}
@@ -306,6 +306,9 @@ export default function Home() {
                       </div>
                     ))}
                   </div>
+                  {(!result.insights || result.insights.length === 0) && (
+                    <p className="text-sm text-muted-foreground">No specific insights available.</p>
+                  )}
                   {result.summary && (
                     <p className="mt-4 text-sm text-muted-foreground italic" data-testid="text-summary">
                       {result.summary}

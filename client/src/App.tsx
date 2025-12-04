@@ -17,7 +17,7 @@ function Header() {
           <img src={interswitch_logo__2_} alt="Interswitch" className="h-6" />
         </div>
         <nav className="flex items-center gap-4">
-          <span className="text-sm font-medium uppercase tracking-wide text-primary" data-testid="text-nav-title">
+          <span className="font-medium uppercase tracking-wide text-primary text-[12px]" data-testid="text-nav-title">
             Sentiment Analysis
           </span>
         </nav>

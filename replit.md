@@ -15,6 +15,13 @@ This is an AI-powered sentiment analysis web application built for Interswitch t
 - Verified frontend and backend are running correctly
 - Made drizzle.config.ts optional (app is stateless, no database needed)
 
+**December 4, 2025 - Vercel Deployment Setup**
+- Created api/index.ts serverless function for Vercel
+- Created vercel.json configuration for API routing and SPA support
+- Added build:vercel script for Vercel-compatible frontend build
+- Updated vite.config.ts to conditionally load Replit plugins only in Replit environment
+- App can now be deployed to both Replit (traditional server) and Vercel (serverless)
+
 ## User Preferences
 
 Preferred communication style: Simple, everyday language.

@@ -47,11 +47,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     if (!parseResult.success) {
       return res.status(400).json({ 
         error: "Invalid request", 
-        details: parseResult.error.errors 
+        details: parseResult.error?.errors || [{ message: 'Invalid input' }]
       });
     }
 
-    const { feedback } = parseResult.data;
+    const { feedback } = parseResult.data!;
 
     console.log("Starting sentiment analysis for feedback of length:", feedback.length);
 

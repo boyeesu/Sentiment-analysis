@@ -192,7 +192,7 @@ export default function Home() {
               AI-Powered Analysis
             </span>
           </div>
-          <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-foreground mb-4">
+          <h1 className="md:text-5xl font-bold tracking-tight text-foreground mb-4 text-[40px]">
             Understand Your Customer Feedback
           </h1>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
@@ -200,7 +200,6 @@ export default function Home() {
           </p>
         </div>
       </section>
-
       {/* Input Section */}
       <section className="px-6 pb-12">
         <div className="max-w-4xl mx-auto">
@@ -274,7 +273,6 @@ export default function Home() {
           </Card>
         </div>
       </section>
-
       {/* Results Section */}
       {result && (
         <section className="px-6 pb-20 animate-in fade-in-0 slide-in-from-bottom-4 duration-500">
@@ -505,7 +503,6 @@ export default function Home() {
           </div>
         </section>
       )}
-
       {/* Empty State */}
       {!result && !analyzeMutation.isPending && (
         <section className="px-6 pb-20">
@@ -519,7 +516,6 @@ export default function Home() {
           </div>
         </section>
       )}
-
       {/* Loading State */}
       {analyzeMutation.isPending && (
         <section className="px-6 pb-20">

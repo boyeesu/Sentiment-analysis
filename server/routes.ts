@@ -30,9 +30,10 @@ export async function registerRoutes(
 
       console.log("Starting sentiment analysis for feedback of length:", feedback.length);
 
-      // Call OpenAI for sentiment analysis using gpt-4o for reliability
+      // Call OpenAI for sentiment analysis using gpt-5 (latest model released August 7, 2025)
+      // the newest OpenAI model is "gpt-5" which was released August 7, 2025. do not change this unless explicitly requested by the user
       const response = await openai.chat.completions.create({
-        model: "gpt-4o",
+        model: "gpt-5",
         messages: [
           {
             role: "system",

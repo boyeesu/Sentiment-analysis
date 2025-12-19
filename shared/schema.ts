@@ -59,6 +59,50 @@ export const sentimentAnalysisResultSchema = z.object({
 
 export type SentimentAnalysisResult = z.infer<typeof sentimentAnalysisResultSchema>;
 
+// Batch analysis schemas
+export const batchFeedbackItemSchema = z.object({
+  id: z.string(),
+  feedback: z.string(),
+  result: sentimentAnalysisResultSchema.optional(),
+  status: z.enum(["pending", "processing", "completed", "error"]),
+  error: z.string().optional(),
+});
+
+export type BatchFeedbackItem = z.infer<typeof batchFeedbackItemSchema>;
+
+export const batchAnalysisRequestSchema = z.object({
+  feedbacks: z.array(z.string().min(1).max(5000)).min(1).max(100),
+});
+
+export type BatchAnalysisRequest = z.infer<typeof batchAnalysisRequestSchema>;
+
+export const batchAnalysisSummarySchema = z.object({
+  totalCount: z.number(),
+  positiveCount: z.number(),
+  negativeCount: z.number(),
+  neutralCount: z.number(),
+  averageSentimentScore: z.number(),
+  averageConfidence: z.number(),
+  topEmotions: z.array(z.object({ name: z.string(), count: z.number() })),
+  urgencyBreakdown: z.object({
+    critical: z.number(),
+    high: z.number(),
+    medium: z.number(),
+    low: z.number(),
+  }),
+  commonThemes: z.array(z.string()),
+  overallRecommendations: z.array(recommendationSchema),
+});
+
+export type BatchAnalysisSummary = z.infer<typeof batchAnalysisSummarySchema>;
+
+export const batchAnalysisResultSchema = z.object({
+  items: z.array(batchFeedbackItemSchema),
+  summary: batchAnalysisSummarySchema,
+});
+
+export type BatchAnalysisResult = z.infer<typeof batchAnalysisResultSchema>;
+
 // Sample feedback for quick testing
 export const sampleFeedbacks = [
   "The product arrived quickly and exceeded my expectations. Great quality and the customer service team was very helpful when I had questions.",

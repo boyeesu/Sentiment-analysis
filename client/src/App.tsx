@@ -5,6 +5,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "@/pages/not-found";
 import Home from "@/pages/home";
+import BatchAnalysis from "@/pages/batch";
 import interswitchLogo from "@assets/interswitch_logo_(2)_1764834997796.png";
 
 import interswitch_logo__2_ from "@assets/interswitch_logo (2).png";
@@ -16,10 +17,13 @@ function Header() {
         <div className="flex items-center gap-2" data-testid="container-logo">
           <img src={interswitch_logo__2_} alt="Interswitch" className="h-6" />
         </div>
-        <nav className="flex items-center gap-4">
-          <span className="font-medium uppercase tracking-wide text-primary text-[12px]" data-testid="text-nav-title">
-            Sentiment Analysis
-          </span>
+        <nav className="flex items-center gap-6">
+          <a href="/" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
+            Single Analysis
+          </a>
+          <a href="/batch" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
+            Batch Upload
+          </a>
         </nav>
       </div>
     </header>
@@ -30,6 +34,7 @@ function Router() {
   return (
     <Switch>
       <Route path="/" component={Home} />
+      <Route path="/batch" component={BatchAnalysis} />
       <Route component={NotFound} />
     </Switch>
   );
